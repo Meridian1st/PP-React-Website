@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Charities from './pages/Charities'
 import Business from './pages/Business'
+import Contact from './pages/Contact'
 import ScrollToTop from './lib/ScrollToTop'
 import { useButtonMicroInteractions } from './animations'
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/charities" element={<Charities />} />
           <Route path="/business" element={<Business />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
       <Footer />

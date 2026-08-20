@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../content/home'
 import { useParallax, useScrollReveal } from '../animations'
 
-export default function Contact() {
+export default function ContactTeaser() {
   // The copy drifts gently against the scroll, giving the band some depth.
   // Note: parallax is kept off the actions block — it also animates `y`,
   // which would fight the button's hover lift.
@@ -22,9 +23,9 @@ export default function Contact() {
         </div>
 
         <div className="contact__actions" ref={actionsRef}>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn--lg">
+          <Link to="/contact" className="btn btn--lg">
             Get in touch
-          </a>
+          </Link>
           <span className="contact__email">{CONTACT_EMAIL}</span>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { HashLink } from '../lib/HashLink'
 import { NAV_ITEMS } from '../content/home'
 import { useHeaderIntro } from '../animations'
 import Logo from './Logo'
@@ -54,9 +53,9 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
-          <HashLink to="/#contact" className="nav__link nav__link--cta">
+          <Link to="/contact" className="nav__link nav__link--cta">
             Get in Touch
-          </HashLink>
+          </Link>
         </nav>
 
         <button
@@ -91,9 +90,9 @@ export default function Header() {
                 {item.hint && <span className="mobile-nav__hint">{item.hint}</span>}
               </NavLink>
             ))}
-            <HashLink to="/#contact" onClick={closeNav} className="mobile-nav__cta">
+            <Link to="/contact" onClick={closeNav} className="mobile-nav__cta">
               Get in Touch
-            </HashLink>
+            </Link>
           </nav>
         </div>
       )}

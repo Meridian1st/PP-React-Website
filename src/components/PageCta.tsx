@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../content/home'
 import { useScrollReveal } from '../animations'
 
@@ -16,9 +17,9 @@ export default function PageCta({ label }: PageCtaProps) {
           {label}
         </h2>
         <div className="contact__actions">
-          <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn--lg">
+          <Link to="/contact" className="btn btn--lg">
             Get in touch
-          </a>
+          </Link>
           <span className="contact__email">{CONTACT_EMAIL}</span>
         </div>
       </div>

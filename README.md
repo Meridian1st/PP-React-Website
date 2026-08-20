@@ -30,6 +30,8 @@ The site is a proper multi-page app now (client-side routed via
   each service expanded into its own short section.
 - `/business` — full service breakdown for businesses, same structure as
   `/charities`.
+- `/contact` — the enquiry form plus contact details. Every "Get in Touch"
+  CTA on the site points here.
 
 ## Layout
 
@@ -53,13 +55,15 @@ src/
     about.ts                Becci + placeholder second-partner copy
     charities.ts             charities page copy + expanded service list
     business.ts              business page copy + expanded service list
+    contact.ts               contact copy, form fields, SUBMIT ENDPOINT
   styles/globals.css       design tokens + every component class
   components/
     Header.tsx              sticky nav + mobile drawer (routes, not anchors)
     Footer.tsx
     Hero.tsx                 homepage hero
     Audiences.tsx            homepage "Two ways in" teaser, links to /charities /business
-    Contact.tsx               homepage contact section (#contact)
+    ContactTeaser.tsx         homepage contact band, links through to /contact
+    ContactForm.tsx           the enquiry form (validation, a11y, spam trap)
     PageHero.tsx              shared intro banner for /about /charities /business
     ServiceList.tsx            expanded per-service grid for /charities /business
     PageCta.tsx                end-of-page contact prompt for /charities /business
@@ -70,6 +74,7 @@ src/
     About.tsx
     Charities.tsx
     Business.tsx
+    Contact.tsx
 ```
 
 Copy changes go in the relevant `src/content/*.ts` file — the components and
@@ -111,6 +116,53 @@ tags, and `public/site.webmanifest` for installable-app icons.
 > **To do:** `og:image` and `twitter:image` in `index.html` are relative
 > paths. Most social scrapers require absolute URLs — swap in the full
 > `https://…` once the production domain is confirmed.
+
+## Contact form
+
+The form lives at `/contact` (`src/components/ContactForm.tsx`). Fields,
+copy, validation messages and — importantly — where submissions go are all
+configured in `src/content/contact.ts`.
+
+### Wiring up submissions  ← the one outstanding job
+
+A static React site has no backend, so the form needs an endpoint. Until one
+is set, `FORM_CONFIG.endpoint` in `src/content/contact.ts` is an empty
+string, and the form **degrades gracefully**: on submit it opens the
+visitor's email client with a pre-filled message to `hello@purposepartners.co.uk`.
+
+That means the form is usable right now and never silently swallows an
+enquiry — but it does depend on the visitor having a mail client set up, so
+it is a stopgap rather than the finished article.
+
+To switch on proper background submission, sign up with a form service
+(Formspree, Web3Forms, Netlify Forms, Basin — all have free tiers that suit
+this volume) and paste the endpoint in:
+
+```ts
+// src/content/contact.ts
+export const FORM_CONFIG = {
+  endpoint: 'https://formspree.io/f/xxxxxxxx',
+  ...
+}
+```
+
+The form POSTs JSON with the keys `name`, `email`, `organisation`,
+`message`. Most services accept that shape as-is. Nothing else needs
+changing — the success and error states are already built.
+
+### What's already handled
+
+- **Validation** — required fields and email format, checked on submit and
+  then live as the visitor corrects things (so it never scolds someone
+  mid-typing).
+- **Accessibility** — every field has a real `<label>`; errors are wired via
+  `aria-describedby` and `aria-invalid`; a summary box at the top lists all
+  problems, links to each field, and takes focus on a failed submit so screen
+  reader users hear it immediately.
+- **Spam** — an off-screen honeypot field. Bots fill it, people can't see it,
+  and a filled honeypot silently discards the submission.
+- **States** — idle, submitting (button disabled), success, and error with a
+  direct mailto fallback.
 
 ## Animations
 
@@ -157,6 +209,10 @@ Notes:
   trigger positions are re-measured against the incoming page's layout.
 
 ## Outstanding
+
+- **Contact form endpoint** — `FORM_CONFIG.endpoint` in
+  `src/content/contact.ts` is empty, so the form currently falls back to
+  opening the visitor's email client. See the Contact form section above.
 
 - `content/about.ts` — `PARTNER_TWO` and `PARTNER_TWO_CREDENTIALS` are
   placeholder Latin text. Replace with real copy and credentials for the

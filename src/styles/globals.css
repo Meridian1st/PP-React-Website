@@ -10,6 +10,7 @@
   --teal-pale: #bbd8d5;
   --navy: #2b5672;
   --apricot: #f29b70;
+  --error: #9c3327;
 
   --ink-86: rgba(16, 16, 16, 0.86);
   --ink-72: rgba(16, 16, 16, 0.72);
@@ -1084,4 +1085,220 @@ a:hover {
   .footer__logo {
     height: 40px;
   }
+}
+
+/* ------------------------------------------------------------------ *
+ * Contact page + form
+ * ------------------------------------------------------------------ */
+
+.contact-page {
+  padding-bottom: clamp(72px, 10vw, 128px);
+}
+
+.contact-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .contact-page__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Details listed alongside the form. */
+.contact-details {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.contact-detail {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  margin: 0;
+}
+
+.contact-detail__label {
+  font-family: var(--grotesk);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.contact-detail__value {
+  margin: 7px 0 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+/* ---- Fields ---- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 26px;
+}
+
+.field__label {
+  font-family: var(--grotesk);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.field__optional {
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink-45);
+  text-transform: none;
+}
+
+.field__hint {
+  margin-top: 6px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-62);
+}
+
+.field__input {
+  margin-top: 10px;
+  padding: 14px 15px;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.55);
+  font-family: var(--body);
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.field__input:hover {
+  border-color: rgba(16, 16, 16, 0.3);
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--teal);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(2, 127, 124, 0.12);
+}
+
+.field__input--textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.field__input--error {
+  border-color: var(--error);
+}
+
+.field__input--error:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(156, 51, 39, 0.12);
+}
+
+.field__error {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--error);
+}
+
+/* Spam trap — off-screen rather than display:none, which some bots skip. */
+.field-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---- Error summary ---- */
+
+.form-summary {
+  margin-bottom: 30px;
+  padding: 18px 20px;
+  border-left: 3px solid var(--error);
+  background: rgba(156, 51, 39, 0.06);
+  border-radius: 0 5px 5px 0;
+}
+
+.form-summary:focus-visible {
+  outline: 2px solid var(--error);
+  outline-offset: 3px;
+}
+
+.form-summary__title {
+  margin: 0 0 8px;
+  font-family: var(--grotesk);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--error);
+}
+
+.form-summary__list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.form-summary__list a {
+  color: var(--error);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-summary__list a:hover {
+  color: var(--ink);
+}
+
+/* ---- Actions and status ---- */
+
+.form__actions {
+  margin-top: 4px;
+}
+
+.form__actions .btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-status {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.form-status--success {
+  padding: 26px 28px;
+  border-left: 3px solid var(--teal);
+  background: rgba(187, 216, 213, 0.34);
+  border-radius: 0 6px 6px 0;
+}
+
+.form-status__text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.form-status--note {
+  color: var(--ink-72);
+}
+
+.form-status--error {
+  color: var(--error);
 }

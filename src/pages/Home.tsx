@@ -1,6 +1,6 @@
 import Hero from '../components/Hero'
 import Audiences from '../components/Audiences'
-import Contact from '../components/Contact'
+import ContactTeaser from '../components/ContactTeaser'
 
 /**
  * Homepage — a short overview/hub. Full service detail lives on the
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <Audiences />
-      <Contact />
+      <ContactTeaser />
     </>
   )
 }

@@ -46,6 +46,9 @@ export default function Footer() {
             <Link to="/about" className="footer__link">
               About us
             </Link>
+            <Link to="/contact" className="footer__link">
+              Contact
+            </Link>
           </div>
 
           <div className="footer__col footer__col--wide">

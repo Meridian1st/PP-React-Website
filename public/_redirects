@@ -1,0 +1,12 @@
+# Purpose Partners — SPA routing for Cloudflare Pages.
+#
+# The site uses React Router, so /about, /charities, /business and /contact are
+# not real files. Without this line a static host returns 404 for all of them the
+# moment someone refreshes the page or opens a link directly.
+#
+# Serve index.html for anything that is not a real asset, with a 200 (not a
+# redirect), and let React Router read the URL.
+#
+# This must live at public/_redirects so Vite copies it into dist/ on build.
+
+/*    /index.html   200

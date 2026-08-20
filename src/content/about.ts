@@ -39,7 +39,7 @@ export const BECCI = {
  * unmistakably a placeholder until replaced in this file.
  */
 export const PARTNER_TWO_CREDENTIALS: Credential[] = [
-  { label: 'Placeholder', value: 'Lorem ipsum dolor sit amet' },
+  { label: 'Education', value: 'University of Newcastle' },
   { label: 'Placeholder', value: 'Consectetur adipiscing elit' },
   { label: 'Placeholder', value: 'Sed do eiusmod tempor incididunt' },
   { label: 'Placeholder', value: 'Ut labore et dolore magna aliqua' },
@@ -47,7 +47,7 @@ export const PARTNER_TWO_CREDENTIALS: Credential[] = [
 
 export const PARTNER_TWO = {
   eyebrow: 'The co-founder',
-  title: 'Lorem ipsum dolor sit amet, consectetur',
+  title: 'Becci Partner in crime',
   bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
     veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
