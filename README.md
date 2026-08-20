@@ -37,6 +37,8 @@ The site is a proper multi-page app now (client-side routed via
 src/
   App.tsx                 routes + Header/Footer shell
   main.tsx                BrowserRouter + app root
+  brand/
+    logos.ts               logo variants + intrinsic ratios
   animations/
     config.ts              ALL animation values — durations, eases, distances
     hooks.ts                the hooks components actually call
@@ -62,6 +64,7 @@ src/
     ServiceList.tsx            expanded per-service grid for /charities /business
     PageCta.tsx                end-of-page contact prompt for /charities /business
     PersonProfile.tsx          single team-member profile, used twice on /about
+    Logo.tsx                   renders a brand lockup by variant
   pages/
     Home.tsx
     About.tsx
@@ -71,6 +74,43 @@ src/
 
 Copy changes go in the relevant `src/content/*.ts` file — the components and
 pages read from it, so layout code rarely needs touching.
+
+## Brand
+
+Client-supplied logo assets live in `public/brand/` and are registered in
+`src/brand/logos.ts`. Components never reference a file path directly — they
+render `<Logo variant="..." height={n} />`, so changing which lockup appears
+somewhere is a one-word change at the call site.
+
+Variants available:
+
+| Variant | Artwork | Use |
+| --- | --- | --- |
+| `teal` | transparent, teal strokes | **default** — header and footer, on `--paper` |
+| `reversedWhite` | transparent, white | dark `--ink` sections (e.g. founder block) |
+| `monoBlack` | transparent, near-black | single-colour / print contexts |
+| `duotone` | teal + pale blue | decorative two-tone |
+| `primary` | white lockup on a teal tile | standalone badge, social card |
+| `icon` / `iconWhite` | PP monogram tile | favicon, app icons |
+
+`Logo` sizes by **height only** and derives width from each asset's intrinsic
+ratio, setting both as attributes so the space is reserved before the SVG
+loads and nothing shifts on screen.
+
+The brand teal is `#027F7C`, which is already the site's `--teal` token — the
+logo drops into the existing palette with no colour change.
+
+Also wired up in `index.html`: SVG + PNG favicons, an apple-touch-icon, a
+`theme-color` that tints mobile browser chrome, Open Graph / Twitter card
+tags, and `public/site.webmanifest` for installable-app icons.
+
+> **Note:** the previous serif "Purpose Partners" text wordmark (with the
+> apricot dot) has been replaced by the client's logo in both the header and
+> the footer. The old `.wordmark` CSS has been removed.
+
+> **To do:** `og:image` and `twitter:image` in `index.html` are relative
+> paths. Most social scrapers require absolute URLs — swap in the full
+> `https://…` once the production domain is confirmed.
 
 ## Animations
 

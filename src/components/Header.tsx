@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { HashLink } from '../lib/HashLink'
 import { NAV_ITEMS } from '../content/home'
 import { useHeaderIntro } from '../animations'
+import Logo from './Logo'
 
 /**
  * Sticky header. The desktop nav / menu-button swap is handled in CSS at the
@@ -31,9 +32,13 @@ export default function Header() {
   return (
     <header className="header" ref={headerRef}>
       <div className="header__bar">
-        <Link to="/" className="wordmark header__wordmark" onClick={closeNav}>
-          Purpose Partners
-          <span className="wordmark__dot" aria-hidden="true" />
+        <Link
+          to="/"
+          className="header__logo"
+          onClick={closeNav}
+          aria-label="Purpose Partners — home"
+        >
+          <Logo variant="teal" height={40} />
         </Link>
 
         <nav className="nav" aria-label="Primary">

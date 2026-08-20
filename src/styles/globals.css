@@ -175,22 +175,26 @@ a:hover {
   border-bottom-color: var(--navy);
 }
 
-.wordmark {
-  font-family: var(--serif);
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  color: var(--ink);
+/* Brand lockups (client-supplied, see src/brand/logos.ts).
+   Sized by height only — width comes from the artwork's own ratio, which
+   the Logo component sets as a width attribute so space is reserved before
+   the SVG loads. */
+.header__logo {
   display: flex;
-  align-items: baseline;
-  gap: 7px;
+  align-items: center;
+  flex: 0 0 auto;
 }
 
-.wordmark__dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--apricot);
+.header__logo img {
   display: block;
+  height: 40px;
+  width: auto;
+}
+
+.footer__logo {
+  display: block;
+  height: 48px;
+  width: auto;
 }
 
 /* ------------------------------------------------------------------ *
@@ -215,10 +219,6 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-}
-
-.header__wordmark {
-  font-size: 23px;
 }
 
 .nav {
@@ -830,10 +830,6 @@ a:hover {
   flex: 1 1 260px;
 }
 
-.footer__wordmark {
-  font-size: 22px;
-}
-
 .footer__blurb {
   margin: 14px 0 0;
   font-size: 14.5px;
@@ -1076,4 +1072,16 @@ a:hover {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--apricot);
+}
+
+/* Brand lockup scales down on small screens so it never crowds the
+   menu button in the 76px header bar. */
+@media (max-width: 560px) {
+  .header__logo img {
+    height: 32px;
+  }
+
+  .footer__logo {
+    height: 40px;
+  }
 }

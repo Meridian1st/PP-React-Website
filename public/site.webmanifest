@@ -1,0 +1,27 @@
+{
+  "name": "Purpose Partners",
+  "short_name": "Purpose Partners",
+  "description": "Consultancy and facilitation for charities, social enterprises and the businesses that partner with them.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f6f3",
+  "theme_color": "#027F7C",
+  "icons": [
+    {
+      "src": "/brand/purpose-partners-icon-192w.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/purpose-partners-icon-512w.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/purpose-partners-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
