@@ -3,4 +3,7 @@ dist
 .DS_Store
 *.local
 _to_delete/
+.env.local
 .env
+*.local
+tsconfig.tsbuildinfo
