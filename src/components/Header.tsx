@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { HashLink } from '../lib/HashLink'
 import { NAV_ITEMS } from '../content/home'
+import { useHeaderIntro } from '../animations'
 
 /**
  * Sticky header. The desktop nav / menu-button swap is handled in CSS at the
@@ -12,6 +13,7 @@ import { NAV_ITEMS } from '../content/home'
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const headerRef = useHeaderIntro<HTMLElement>()
 
   // Close the drawer if the viewport grows past the breakpoint, so it can't
   // be left open behind the desktop nav.
@@ -27,7 +29,7 @@ export default function Header() {
   const closeNav = () => setMenuOpen(false)
 
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <div className="header__bar">
         <Link to="/" className="wordmark header__wordmark" onClick={closeNav}>
           Purpose Partners

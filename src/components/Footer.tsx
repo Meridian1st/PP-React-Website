@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
 import { CONTACT_EMAIL } from '../content/home'
+import { useCascade } from '../animations'
 
 export default function Footer() {
+  // Footer columns settle in as the foot of the page comes into view.
+  const ref = useCascade<HTMLDivElement>('.footer__brand, .footer__col')
+
   return (
     <footer className="footer">
-      <div className="shell footer__inner">
+      <div className="shell footer__inner" ref={ref}>
         <div className="footer__top">
           <div className="footer__brand">
             <span className="wordmark footer__wordmark">

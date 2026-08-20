@@ -1,4 +1,5 @@
 import type { Credential } from '../content/about'
+import { usePortraitReveal, useScrollReveal, useCascade } from '../animations'
 
 type PersonProfileProps = {
   id: string
@@ -34,6 +35,13 @@ export default function PersonProfile({
   portraitSrc,
   isPlaceholder = false,
 }: PersonProfileProps) {
+  // The portrait frame wipes open while its contents settle back from
+  // slightly over-scaled — the set-piece moment of the About page.
+  const portraitRef = usePortraitReveal<HTMLDivElement>()
+  // Bio block fades up; the credential rows then cascade beneath it.
+  const mainRef = useScrollReveal<HTMLDivElement>()
+  const credentialsRef = useCascade<HTMLDListElement>('.credential')
+
   return (
     <section
       id={id}
@@ -43,7 +51,7 @@ export default function PersonProfile({
       <div className="shell">
         {isPlaceholder && <span className="founder__placeholder-flag">Placeholder content</span>}
         <div className="founder__body">
-          <div className="founder__main">
+          <div className="founder__main" ref={mainRef}>
             <span className="eyebrow eyebrow--pale">{eyebrow}</span>
             <h2 className="founder__title" id={`${id}-title`}>
               {title}
@@ -51,7 +59,7 @@ export default function PersonProfile({
             <p className="founder__bio">{bio}</p>
             {team && <p className="founder__team">{team}</p>}
 
-            <dl className="credentials">
+            <dl className="credentials" ref={credentialsRef}>
               {credentials.map((credential) => (
                 <div key={credential.label} className="credential">
                   <dt className="credential__label">{credential.label}</dt>
@@ -63,11 +71,11 @@ export default function PersonProfile({
 
           <div className="founder__aside">
             {portraitSrc ? (
-              <div className="portrait portrait--filled">
+              <div className="portrait portrait--filled" ref={portraitRef}>
                 <img className="portrait__image" src={portraitSrc} alt={portraitLabel} />
               </div>
             ) : (
-              <div className="portrait">
+              <div className="portrait" ref={portraitRef}>
                 <span className="portrait__note">
                   portrait — {portraitLabel}
                   <br />

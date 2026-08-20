@@ -6,8 +6,13 @@ import About from './pages/About'
 import Charities from './pages/Charities'
 import Business from './pages/Business'
 import ScrollToTop from './lib/ScrollToTop'
+import { useButtonMicroInteractions } from './animations'
 
 export default function App() {
+  // Registered once for the whole app: every button on every page picks up
+  // the hover lift and press feedback via event delegation.
+  useButtonMicroInteractions()
+
   return (
     <>
       <ScrollToTop />

@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL } from '../content/home'
+import { useScrollReveal } from '../animations'
 
 type PageCtaProps = {
   label: string
@@ -6,9 +7,11 @@ type PageCtaProps = {
 
 /** Simple end-of-page call to action, used on /charities and /business. */
 export default function PageCta({ label }: PageCtaProps) {
+  const ref = useScrollReveal<HTMLDivElement>()
+
   return (
     <section className="page-cta" aria-labelledby="page-cta-title">
-      <div className="shell page-cta__inner">
+      <div className="shell page-cta__inner" ref={ref}>
         <h2 className="page-cta__title" id="page-cta-title">
           {label}
         </h2>

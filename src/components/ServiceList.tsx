@@ -1,4 +1,5 @@
 import type { ServiceDetail } from '../content/charities'
+import { useStaggerReveal } from '../animations'
 
 type ServiceListProps = {
   services: ServiceDetail[]
@@ -8,8 +9,11 @@ type ServiceListProps = {
 
 /** Expanded service breakdown for the /charities and /business pages. */
 export default function ServiceList({ services, variant }: ServiceListProps) {
+  // Cards enter in sequence as the grid scrolls into view.
+  const ref = useStaggerReveal<HTMLElement>('.service')
+
   return (
-    <section className="shell services" aria-label="Services">
+    <section className="shell services" aria-label="Services" ref={ref}>
       <div className="services__grid">
         {services.map((service, i) => (
           <article key={service.title} className={`service service--${variant}`}>

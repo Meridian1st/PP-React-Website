@@ -14,7 +14,7 @@ npm run build    # type-check + production build into dist/
 npm run preview  # serve the production build
 ```
 
-Stack: Vite 7, React 19, TypeScript, React Router 7.
+Stack: Vite 7, React 19, TypeScript, React Router 7, GSAP (ScrollTrigger).
 
 ## Pages
 
@@ -37,6 +37,11 @@ The site is a proper multi-page app now (client-side routed via
 src/
   App.tsx                 routes + Header/Footer shell
   main.tsx                BrowserRouter + app root
+  animations/
+    config.ts              ALL animation values — durations, eases, distances
+    hooks.ts                the hooks components actually call
+    gsap-setup.ts           one-time GSAP plugin registration
+    index.ts                public entry point (import from '../animations')
   lib/
     HashLink.tsx           <Link> that also scrolls to #hash targets,
                             including same-page hash navigation
@@ -66,6 +71,50 @@ src/
 
 Copy changes go in the relevant `src/content/*.ts` file — the components and
 pages read from it, so layout code rarely needs touching.
+
+## Animations
+
+Motion is built on GSAP + ScrollTrigger, and follows the same split as the
+copy: **all tuning values live in `src/animations/config.ts`**, and
+components only ever call a named hook. No component contains a duration, an
+easing curve or a distance.
+
+To retune the site's motion, edit `config.ts` alone:
+
+- `SPEED` — a global multiplier. Set `1.2` to slow everything down, `0.8` to
+  tighten it up, without touching any individual animation.
+- `EASE` — the shared easing curves.
+- `INTRO` / `HEADER_INTRO` — the first-paint entrance.
+- `REVEAL` / `STAGGER` / `CASCADE` — scroll-triggered entrances.
+- `DRAW`, `PORTRAIT`, `PARALLAX`, `BUTTON` — the individual set-pieces.
+
+The hooks, all exported from `src/animations`:
+
+| Hook | What it does | Used by |
+| --- | --- | --- |
+| `useIntroSequence(sel)` | staggered settle on mount, for above-the-fold content | `Hero`, `PageHero` |
+| `useHeaderIntro()` | header eases down on first load | `Header` |
+| `useScrollReveal()` | element fades and lifts as it enters view | `Contact`, `PageCta`, `PersonProfile` |
+| `useStaggerReveal(sel)` | children enter one after another | `Audiences`, `ServiceList` |
+| `useCascade(sel)` | tighter, quicker ripple for nested small items | `Audiences`, `Footer`, `PersonProfile` |
+| `useDrawIn()` | hairline rule draws itself across | `Hero` |
+| `usePortraitReveal()` | clip-path wipe + scale settle | `PersonProfile` |
+| `useParallax()` | scroll-linked drift (the only scrubbed effect) | `Contact` |
+| `useButtonMicroInteractions()` | hover lift + press feedback, site-wide | `App` (once) |
+
+Notes:
+
+- **Reduced motion is respected throughout.** Every hook runs inside
+  `gsap.matchMedia`, so a visitor with "reduce motion" enabled at OS level
+  gets no animation created at all — elements render in their normal final
+  state rather than being animated to it.
+- **Buttons use event delegation**, registered once in `App.tsx`. Any button
+  added later picks up the same micro-interaction automatically; there is no
+  per-button wiring.
+- **Don't apply `useParallax` to anything containing a button** — both animate
+  `y`, and they will fight each other.
+- `refreshScrollTriggers()` is called on route change (from `ScrollToTop`) so
+  trigger positions are re-measured against the incoming page's layout.
 
 ## Outstanding
 
