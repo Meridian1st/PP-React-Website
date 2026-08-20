@@ -1,0 +1,42 @@
+{
+  // Purpose Partners — Cloudflare Worker (static site + preview gate).
+  //
+  // This replaces the wrangler.jsonc Cloudflare's autoconfig generates on the
+  // build machine. Two things differ from that generated one:
+  //
+  //   "main"                  — points at the preview gate, so there is a
+  //                             Worker script at all. Without it, Cloudflare
+  //                             serves the assets and nothing else runs.
+  //   "run_worker_first"      — makes the gate run BEFORE any file is served.
+  //                             Without it, static files would be handed out
+  //                             before the password is ever checked.
+  //
+  // To open the site to the public later, either set PREVIEW_DISABLED=true in
+  // the dashboard, or delete "main" + "run_worker_first" here and delete
+  // worker/index.js.
+
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pp-react-website",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-08-15",
+
+  "observability": {
+    "enabled": true
+  },
+
+  "assets": {
+    // Where `npm run build` puts the built site.
+    "directory": "dist",
+
+    // Exposes the built files to the Worker as env.ASSETS.
+    "binding": "ASSETS",
+
+    // React Router: /about and friends are not real files, so anything that
+    // isn't a real asset serves index.html and lets the router handle it.
+    // This is the Workers equivalent of public/_redirects.
+    "not_found_handling": "single-page-application",
+
+    // Run the gate before serving anything at all.
+    "run_worker_first": true
+  }
+}
