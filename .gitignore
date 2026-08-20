@@ -7,3 +7,7 @@ _to_delete/
 .env
 *.local
 tsconfig.tsbuildinfo
+
+.wrangler/
+.dev.vars
+_tools/
